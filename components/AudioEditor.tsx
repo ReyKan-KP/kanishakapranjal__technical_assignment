@@ -6,7 +6,6 @@ import {
   IconPlayerPause,
   IconCut,
   IconTrash,
-  IconDeviceFloppy,
 } from "@tabler/icons-react";
 import WaveSurfer from "wavesurfer.js";
 import { GrUndo, GrRedo } from "react-icons/gr";
@@ -18,7 +17,7 @@ export default function Component({ audioFile }: { audioFile: File }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [selectedFormat, setSelectedFormat] = useState("mp3");
+  const [selectedFormat, setSelectedFormat] = useState("wav");
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer | null>(null);
   const audioContext = useRef<AudioContext | null>(null);
@@ -28,7 +27,7 @@ export default function Component({ audioFile }: { audioFile: File }) {
     if (audioFile && waveformRef.current) {
       wavesurfer.current = WaveSurfer.create({
         container: waveformRef.current,
-        waveColor: "#4ade80",
+        waveColor: "#01ff8f",
         progressColor: "#22c55e",
         cursorColor: "#ffffff",
         barWidth: 2,
@@ -241,30 +240,30 @@ export default function Component({ audioFile }: { audioFile: File }) {
       setCurrentTime(0);
     }
   };
-const handleUndoClick = () => {
-  handleUndo(
-    audioBuffer,
-    setHistory,
-    setRedoStack,
-    history,
-    redoStack,
-    setDuration,
-    waveformRef
-  );
-};
+  const handleUndoClick = () => {
+    handleUndo(
+      audioBuffer,
+      setHistory,
+      setRedoStack,
+      history,
+      redoStack,
+      setDuration,
+      waveformRef
+    );
+  };
 
-const handleRedoClick = () => {
-  handleRedo(
-    audioBuffer,
-    setHistory,
-    setRedoStack,
-    history,
-    redoStack,
-    setDuration,
-    waveformRef
-  );
-};
-
+  const handleRedoClick = () => {
+    handleRedo(
+      audioBuffer,
+      setHistory,
+      setRedoStack,
+      history,
+      redoStack,
+      setDuration,
+      waveformRef
+    );
+  };
+const getTimeDifference = () => formatTime(endTime - startTime);
   return (
     <div className="audio-editor">
       <div className="waveform-container">
@@ -286,8 +285,9 @@ const handleRedoClick = () => {
           className="slider end-slider"
         />
         <div className="time-labels">
-          <span>Start: {formatTime(startTime)}</span>
-          <span>End: {formatTime(endTime)}</span>
+          <span>{formatTime(startTime)}</span>
+          <span>{getTimeDifference()}</span>
+          <span>{formatTime(endTime)}</span>
         </div>
       </div>
       <div className="controls">
@@ -333,7 +333,6 @@ const handleRedoClick = () => {
             </select>
           </span>
           <button className="save-button" onClick={handleSave}>
-            <IconDeviceFloppy size={20} />
             <span>Save</span>
           </button>
         </div>
@@ -377,35 +376,41 @@ const handleRedoClick = () => {
         .slider {
           position: absolute;
           width: calc(100% - 32px);
-          top: 116px;
+          top: 60px;
           left: 16px;
           -webkit-appearance: none;
           appearance: none;
-          height: 2px;
-          background: #4ade80;
+          height: 4px;
+          background: transparent;
           outline: none;
           opacity: 0.7;
           transition: opacity 0.2s;
+          z-index: 10;
         }
+
         .slider:hover {
           opacity: 1;
         }
+
         .slider::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
           width: 4px;
-          height: 20px;
-          background: #4ade80;
+          height: 100px;
+          background: #6be0c5;
+          border-radius: 50%;
           cursor: pointer;
         }
+
         .slider::-moz-range-thumb {
-          width: 4px;
-          height: 20px;
-          background: #4ade80;
+          width: 10px;
+          height: 120px;
+          background: #6be0c5;
           cursor: pointer;
         }
+
         .end-slider {
-          top: 132px;
+          top: 60px;
         }
         .time-labels {
           display: flex;
@@ -448,7 +453,10 @@ const handleRedoClick = () => {
         .playback-controls {
           display: flex;
           align-items: center;
+          justify-content: center;
+          flex-grow: 1;
         }
+
         .play-pause-button {
           background-color: #2c2b31;
           border: none;
@@ -462,6 +470,8 @@ const handleRedoClick = () => {
           display: flex;
           gap: 16px;
           justify-content: center;
+          flex-grow: 1;
+          text-align: center;
         }
         .format-save {
           display: flex;
@@ -478,7 +488,7 @@ const handleRedoClick = () => {
           border-radius: 4px;
         }
         .save-button {
-          background-color: #4ade80;
+          background-color: #d3d3df;
           border: none;
           color: black;
           padding: 0.5rem 1rem;
