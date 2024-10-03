@@ -1,0 +1,82 @@
+.pageContainer {
+  background-color: #18161e;
+  min-height: 100vh;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow-y: auto;
+}
+
+.navBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.navBarScrolled {
+  background-color: #18161e;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navButtonGroup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.navButtonGroupScrolled {
+  position: static;
+  transform: none;
+}
+
+.contentContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.headingTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.headingSubtitle {
+  font-size: 1.25rem;
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+}
+
+.infoSectionContainer {
+  min-height: 100vh;
+  padding: 4rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.infoHeading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoCard {
+  background-color: #1d1a26;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  border-left: 4px solid #3a3552;
+}
+
+.infoText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #a0a0a0;
+}

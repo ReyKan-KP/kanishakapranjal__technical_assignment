@@ -1,0 +1,11 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="120" height="120" fill="currentColor" stroke="">
+  <defs>
+    <symbol viewBox="0 0 120 120" id="icon-menu-remover">
+      <circle cx="25" cy="25" r="25" fill="#39BB81"></circle>
+      <circle cx="25" cy="95" r="25" fill="#665DC3"></circle>
+      <path d="m95 35 25 25-25 25z"></path>
+      <path stroke="#EEEEEE" stroke-width="10px" d="M75 60h20"></path>
+    </symbol>
+  </defs>
+  <use xlink:href="#icon-menu-remover" fill="#EAEAFA"></use>
+</svg>

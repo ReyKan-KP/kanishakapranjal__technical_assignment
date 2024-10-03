@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Navbar } from "../components/Navbar";
-import { AudioCutter } from "../components/AudioCutter";
+import { Navbar } from "@/components/Navbar";
 import styles from "@/styles/HomePage.module.css";
-
+import { AudioCutter } from "@/components/AudioCutter";
 export default function HomePage() {
-  const [isCollapsed, setIsCollapsed] = useState(false); // State for navbar collapse
-
+  const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <div className={styles.container}>
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />

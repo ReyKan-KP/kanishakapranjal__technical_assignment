@@ -1,0 +1,8 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="2.5" height="1.7" fill="currentColor" stroke="">
+  <defs>
+    <symbol viewBox="0 0 39.989 39.989" id="icon-menu-karaoke">
+      <path d="M19.994 0C8.952 0 0 8.952 0 19.995c0 11.043 8.952 19.994 19.994 19.994s19.995-8.952 19.995-19.994C39.989 8.952 31.037 0 19.994 0zm0 27.745a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5z"></path>
+    </symbol>
+  </defs>
+  <use xlink:href="#icon-menu-karaoke" fill-opacity="0.5" fill="#EAEAFA"></use>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="2.5" height="1.7" fill="currentColor" stroke="">
+  <defs>
+    <symbol viewBox="0 0 197 362" id="icon-menu-pitch">
+      <path d="M82.03 272.056v89.973h32.812v-89.973a98.565 98.565 0 0 0 58.742-33.547 98.57 98.57 0 0 0 23.29-63.512V16.407A16.405 16.405 0 0 0 188.67 2.2a16.392 16.392 0 0 0-16.406 0 16.405 16.405 0 0 0-8.203 14.207v158.59a65.625 65.625 0 0 1-131.249 0V16.407A16.405 16.405 0 0 0 24.61 2.2a16.392 16.392 0 0 0-16.406 0A16.405 16.405 0 0 0 0 16.407v158.59a98.573 98.573 0 0 0 23.289 63.512 98.564 98.564 0 0 0 58.742 33.547z"></path>
+    </symbol>
+  </defs>
+  <use xlink:href="#icon-menu-pitch" fill-opacity="0.5" fill="#EAEAFA"></use>
+</svg>
