@@ -5,8 +5,10 @@ import {
   IconPlayerPlay,
   IconPlayerPause,
   IconCut,
+  IconX,
   IconTrash,
 } from "@tabler/icons-react";
+import { IoPlaySkipBack } from "react-icons/io5";
 import WaveSurfer from "wavesurfer.js";
 import { GrUndo, GrRedo } from "react-icons/gr";
 import { handleUndo, handleRedo } from "@/utils/undoRedoUtils";
@@ -139,6 +141,17 @@ export default function Component({ audioFile }: { audioFile: File }) {
       setCurrentTime(0);
     }
   };
+  const playFromStart = () => {
+    if (wavesurfer.current) {
+      wavesurfer.current.seekTo(0);
+      setCurrentTime(0);
+      wavesurfer.current.play();
+      setIsPlaying(true);
+    }
+  };
+  const handleCloseEditor = () => {
+    // Logic to close the editor
+  };
 
   const handleSave = () => {
     if (audioBuffer.current && audioContext.current) {
@@ -266,6 +279,9 @@ export default function Component({ audioFile }: { audioFile: File }) {
 const getTimeDifference = () => formatTime(endTime - startTime);
   return (
     <div className="audio-editor">
+      <button className="close-editor" onClick={handleCloseEditor}>
+        <IconX size={24} />
+      </button>
       <div className="waveform-container">
         <div ref={waveformRef} className="waveform" />
         <input
@@ -306,18 +322,38 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           <GrRedo size={20} />
         </button>
       </div>
+      {/* <hr className="footer-line" /> */}
       <div className="footer">
         <div className="playback-controls">
           <button onClick={togglePlayPause} className="play-pause-button">
             {isPlaying ? (
-              <IconPlayerPause size={24} />
+              <IconPlayerPause size={20} />
             ) : (
-              <IconPlayerPlay size={24} />
+              <IconPlayerPlay size={20} />
             )}
           </button>
+          <button className="play-pause-button" onClick={playFromStart}>
+            <IoPlaySkipBack size={20} />
+          </button>
           <div className="time-display">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
+            <span>Start :</span>
+            <input
+              type="number"
+              min="0"
+              max={endTime}
+              value={currentTime.toFixed(2)}
+              onChange={handleStartTimeChange}
+              className="time-input"
+            />
+            <span>End :</span>
+            <input
+              type="number"
+              min={startTime}
+              max={duration}
+              value={endTime.toFixed(2)}
+              onChange={handleEndTimeChange}
+              className="time-input"
+            />
           </div>
         </div>
         <div className="format-save">
@@ -337,6 +373,7 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           </button>
         </div>
       </div>
+
       <style jsx>{`
         .audio-editor {
           width: 100vw;
@@ -348,6 +385,15 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           align-items: center;
           color: white;
           font-family: Arial, sans-serif;
+        }
+        .close-editor {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          background: none;
+          /* color: white */
+          border: none;
+          cursor: pointer;
         }
         .menu-button {
           position: absolute;
@@ -443,12 +489,18 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           display: flex;
           justify-content: space-between;
           align-items: center;
-          width: 90%;
+          width: 95%;
           max-width: 1200px;
           position: absolute;
           bottom: 0;
           left: 50%;
           transform: translateX(-50%);
+        }
+        .footer-line {
+          width: 100%;
+          border: 1px solid #2c2b31;
+          /* padding-top: 25rem; */
+          /* bottom:0; */
         }
         .playback-controls {
           display: flex;
@@ -461,14 +513,15 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           background-color: #2c2b31;
           border: none;
           color: white;
-          padding: 0.5rem;
-          border-radius: 50%;
+          padding: 0.8rem;
+          width: 6rem;
+          border-radius: 25%;
           cursor: pointer;
           margin-right: 16px;
         }
         .time-display {
           display: flex;
-          gap: 16px;
+          gap: 1rem;
           justify-content: center;
           flex-grow: 1;
           text-align: center;
@@ -481,7 +534,7 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           margin-right: 16px;
         }
         .format-select {
-          background-color: #2c2b31;
+          background: #18161e;
           color: #4ade80;
           border: none;
           padding: 4px 8px;
@@ -491,7 +544,7 @@ const getTimeDifference = () => formatTime(endTime - startTime);
           background-color: #d3d3df;
           border: none;
           color: black;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 1.5rem;
           border-radius: 20px;
           cursor: pointer;
           display: flex;
@@ -499,6 +552,21 @@ const getTimeDifference = () => formatTime(endTime - startTime);
         }
         .save-button span {
           margin-left: 4px;
+        }
+        .time-input {
+          width: 100px;
+          background: #18161e;
+          color: white;
+          /* border: none; */
+          padding: 4px;
+          text-align: center;
+          border-radius: 40px;
+          align-items: center;
+        }
+
+        .time-input:focus {
+          outline: none;
+          box-shadow: 0 0 5px #4ade80;
         }
         @media (max-width: 640px) {
           .audio-editor {
