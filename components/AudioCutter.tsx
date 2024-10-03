@@ -11,6 +11,7 @@ export function AudioCutter() {
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [hasScrolled, setHasScrolled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false); // New state for tracking redirection
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,60 +28,63 @@ export function AudioCutter() {
       setTimeout(() => {
         setLoading(false);
         setAudioFile(file);
+        setIsRedirecting(true); // Set redirection to true when file is selected
       }, 1000);
     }
   };
 
   return (
     <Box className={styles.pageContainer}>
-      <Box
-        className={`${styles.navBar} ${
-          hasScrolled ? styles.navBarScrolled : ""
-        }`}
-      >
-        <Group>
-          <Box
-            style={{
-              width: 32,
-              height: 32,
-              visibility: hasScrolled ? "visible" : "hidden",
-            }}
-          />
-          <Group
-            className={
-              hasScrolled
-                ? styles.navButtonGroupScrolled
-                : styles.navButtonGroup
-            }
-          >
-            <Button
-              variant="subtle"
-              color="gray"
-              onClick={() => {
-                const infoSection = document.getElementById("infoSection");
-                if (infoSection)
-                  infoSection.scrollIntoView({ behavior: "smooth" });
+      {!isRedirecting && ( // Conditionally render navBar based on redirection
+        <Box
+          className={`${styles.navBar} ${
+            hasScrolled ? styles.navBarScrolled : ""
+          }`}
+        >
+          <Group>
+            <Box
+              style={{
+                width: 32,
+                height: 32,
+                visibility: hasScrolled ? "visible" : "hidden",
               }}
+            />
+            <Group
+              className={
+                hasScrolled
+                  ? styles.navButtonGroupScrolled
+                  : styles.navButtonGroup
+              }
             >
-              HOW IT WORKS
-            </Button>
-            <Button
-              variant="subtle"
-              color="gray"
-              onClick={() => router.push("/")}
-            >
-              JOINER
-            </Button>
+              <Button
+                variant="subtle"
+                color="gray"
+                onClick={() => {
+                  const infoSection = document.getElementById("infoSection");
+                  if (infoSection)
+                    infoSection.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                HOW IT WORKS
+              </Button>
+              <Button
+                variant="subtle"
+                color="gray"
+                onClick={() => router.push("/")}
+              >
+                JOINER
+              </Button>
+            </Group>
+            <Box
+              style={{
+                width: 32,
+                height: 32,
+                visibility: hasScrolled ? "visible" : "hidden",
+              }}
+            />
           </Group>
-          <Box
-            style={{
-              width: 32,
-              height: 32,
-              visibility: hasScrolled ? "visible" : "hidden",
-            }}
-          />
-        </Group>
-      </Box>
+        </Box>
+      )}
 
       {!audioFile ? (
         <>
