@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import WaveSurfer from "wavesurfer.js";
 import { GrUndo, GrRedo } from "react-icons/gr";
+import { handleUndo, handleRedo } from "@/utils/undoRedoUtils";
 
 export default function Component({ audioFile }: { audioFile: File }) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -240,58 +241,29 @@ export default function Component({ audioFile }: { audioFile: File }) {
       setCurrentTime(0);
     }
   };
+const handleUndoClick = () => {
+  handleUndo(
+    audioBuffer,
+    setHistory,
+    setRedoStack,
+    history,
+    redoStack,
+    setDuration,
+    waveformRef
+  );
+};
 
-  const handleUndo = () => {
-    if (history.length > 0) {
-      const lastBuffer = history.pop();
-      setRedoStack([...redoStack, audioBuffer.current!]); // Save the current state for redo
-      audioBuffer.current = lastBuffer;
-      setHistory([...history]);
-      // Re-render the waveform
-      if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-      }
-      wavesurfer.current = WaveSurfer.create({
-        container: waveformRef.current!,
-        waveColor: "#4ade80",
-        progressColor: "#22c55e",
-        cursorColor: "#ffffff",
-        barWidth: 2,
-        barRadius: 3,
-        height: 100,
-        normalize: true,
-      });
-      const blob = bufferToWave(lastBuffer, lastBuffer.length);
-      wavesurfer.current.loadBlob(blob);
-      setDuration(lastBuffer.duration);
-    }
-  };
-
-  const handleRedo = () => {
-    if (redoStack.length > 0) {
-      const nextBuffer = redoStack.pop();
-      setHistory([...history, audioBuffer.current!]); // Save the current state for undo
-      audioBuffer.current = nextBuffer;
-      setRedoStack([...redoStack]);
-      // Re-render the waveform
-      if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-      }
-      wavesurfer.current = WaveSurfer.create({
-        container: waveformRef.current!,
-        waveColor: "#4ade80",
-        progressColor: "#22c55e",
-        cursorColor: "#ffffff",
-        barWidth: 2,
-        barRadius: 3,
-        height: 100,
-        normalize: true,
-      });
-      const blob = bufferToWave(nextBuffer, nextBuffer.length);
-      wavesurfer.current.loadBlob(blob);
-      setDuration(nextBuffer.duration);
-    }
-  };
+const handleRedoClick = () => {
+  handleRedo(
+    audioBuffer,
+    setHistory,
+    setRedoStack,
+    history,
+    redoStack,
+    setDuration,
+    waveformRef
+  );
+};
 
   return (
     <div className="audio-editor">
@@ -327,10 +299,10 @@ export default function Component({ audioFile }: { audioFile: File }) {
           <IconTrash size={20} />
           <span>Remove</span>
         </button>
-        <button className="control-button" onClick={handleUndo}>
+        <button className="control-button" onClick={handleUndoClick}>
           <GrUndo size={20} />
         </button>
-        <button className="control-button" onClick={handleRedo}>
+        <button className="control-button" onClick={handleRedoClick}>
           <GrRedo size={20} />
         </button>
       </div>
